@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CompaniesIndexComponent } from './companies/companies-index/companies-index.component';
 import { CompaniesAddComponent } from './companies/companies-add/companies-add.component';
 import { CompaniesEditComponent } from './companies/companies-edit/companies-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CompaniesEditComponent } from './companies/companies-edit/companies-edi
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

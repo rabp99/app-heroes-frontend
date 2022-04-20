@@ -1,6 +1,6 @@
 <h2>Lista de Compañías</h2>
 <div>
-    <button>Nueva Compañía</button>
+    <a [routerLink]="['add']">Nueva Compañía</a>
 </div>
 <div>
     <table>
@@ -12,9 +12,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let company of companies">
+            <tr *ngFor="let company of companies$ | async">
                 <td>{{ company.id }}</td>
-                <td>{{ company.description }}</td>
+                <td><a [routerLink]="['edit', company.id]"> {{ company.description }}</a></td>
                 <td>{{ company.country }}</td>
             </tr>
         </tbody>

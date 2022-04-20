@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Observable, switchMap } from 'rxjs';
+import { CompaniesService } from '../companies.service';
+import { Company } from '../company';
 
 @Component({
   selector: 'app-companies-index',
@@ -6,21 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./companies-index.component.scss']
 })
 export class CompaniesIndexComponent implements OnInit {
-  companies: any[];
-  constructor() {
-    this.companies = [{
-        id: 1,
-        description: 'MARVEL',
-        country: 'USA'
-      }, {
-        id: 2,
-        description: 'SHONEN JUMP',
-        country: 'JAPÓN'
-      }
-    ]
+  companies$!: Observable<Company[]>;
+
+  constructor(
+    private title: Title,
+    private service: CompaniesService
+  ) {
+    this.title.setTitle('Lista de Compañías | Sistema de Héroes');
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.companies$ = this.service.getCompanies(); 
   }
-
 }

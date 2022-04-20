@@ -1,1 +1,13 @@
-<p>companies-add works!</p>
+<a [routerLink]="['../']">Regresar</a>
+<h2>Nuevo Héroe</h2>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm)">
+    <div>
+        <input placeholder="Descripción" formControlName="description">
+    </div>
+    <div>
+        <input placeholder="País" formControlName="country">
+    </div>
+    <div>
+        <button type="submit">Registrar</button>
+    </div>
+</form>

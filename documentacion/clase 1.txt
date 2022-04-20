@@ -2,3 +2,5 @@
 2. Modificamos el app-routing.module.ts
 3. Modificamos el app.component.html
 4. modificamos el companies-index-component
+5. Agregamos ReactiveFormsModule a app.module.ts
+6. Creamos companies-add.component.ts

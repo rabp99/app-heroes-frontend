@@ -17,9 +17,9 @@ export class CompaniesIndexComponent implements OnInit {
     private service: CompaniesService
   ) {
     this.title.setTitle('Lista de Compañías | Sistema de Héroes');
+    this.companies$ = this.service.getCompanies(); 
   }
 
   ngOnInit() {
-    this.companies$ = this.service.getCompanies(); 
   }
 }

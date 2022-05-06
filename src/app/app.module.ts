@@ -22,7 +22,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { AddressComponent } from './address/address.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -34,8 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
     CompaniesAddComponent,
     CompaniesEditComponent,
     NavComponent,
-    DashboardComponent,
-    AddressComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

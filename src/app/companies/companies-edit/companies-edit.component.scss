@@ -1,0 +1,43 @@
+.container {
+    margin: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+ 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+  
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+  
+.col:last-child {
+    margin-right: 0;
+}
+
+.company-form {
+    width: 30%;
+}
+
+.mat-card-actions {
+    display: flex;
+    justify-content: end;
+}
+
+.back-arrow {
+    margin-bottom: 10px;
+    a {
+        mat-icon {
+            vertical-align: middle;
+        }
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

@@ -7,7 +7,6 @@ import { CompaniesIndexComponent } from './companies/companies-index/companies-i
 import { CompaniesAddComponent } from './companies/companies-add/companies-add.component';
 import { CompaniesEditComponent } from './companies/companies-edit/companies-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PrimeroComponent } from './primero/primero.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -23,7 +22,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { TableComponent } from './table/table.component';
+import { AddressComponent } from './address/address.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -31,10 +33,9 @@ import { TableComponent } from './table/table.component';
     CompaniesIndexComponent,
     CompaniesAddComponent,
     CompaniesEditComponent,
-    PrimeroComponent,
     NavComponent,
     DashboardComponent,
-    TableComponent
+    AddressComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,10 @@ import { TableComponent } from './table/table.component';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

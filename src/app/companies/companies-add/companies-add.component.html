@@ -1,13 +1,29 @@
-<a [routerLink]="['../']">Regresar</a>
-<h2>Nuevo Héroe</h2>
-<form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm)">
-    <div>
-        <input placeholder="Descripción" formControlName="description">
+<div class="container">
+    <div class="back-arrow">
+        <a [routerLink]="['../']">
+            <mat-icon>arrow_back</mat-icon> Regresar
+        </a>
     </div>
-    <div>
-        <input placeholder="País" formControlName="country">
-    </div>
-    <div>
-        <button type="submit">Registrar</button>
-    </div>
-</form>
+    <h1 class="mat-h1">Nueva Compañía</h1>
+    <form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm)">
+        <mat-card class="company-form">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput formControlName="description">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>País</mat-label>
+                        <input matInput formControlName="country">
+                      </mat-form-field>
+                    </div>
+                  </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Registrar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

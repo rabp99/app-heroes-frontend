@@ -5,7 +5,8 @@
     </div>
     <div>
         <div class="mat-elevation-z8">
-            <table mat-table class="full-width-table" matSort aria-label="Elements">
+            <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource"
+              matSortDisableClear multiTemplateDataRows>
               <!-- Id Column -->
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Código</th>
@@ -31,7 +32,7 @@
             </table>
           
             <mat-paginator #paginator
-                [length]="dataSource?.data?.length"
+                [length]="dataSource?.count$ | async"
                 [pageIndex]="0"
                 [pageSize]="10"
                 [pageSizeOptions]="[5, 10, 20]"

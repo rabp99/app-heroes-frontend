@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
-import { Observable, switchMap } from 'rxjs';
 import { CompaniesService } from '../companies.service';
 import { Company } from '../company';
 import { CompaniesDataSource } from './companies-datasource';
@@ -21,16 +20,15 @@ export class CompaniesIndexComponent implements AfterViewInit {
   displayedColumns: string[];
 
   constructor(
-    private title: Title
+    private title: Title,
+    private companiesService: CompaniesService
   ) {
     this.title.setTitle('Lista de Compañías | Sistema de Héroes');
-    this.dataSource = new CompaniesDataSource();
+    this.dataSource = new CompaniesDataSource(this.companiesService);
     this.displayedColumns = ['id', 'description', 'country'];
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.dataSource.loadCompanies();
   }
 }

@@ -1,26 +1,33 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ConfigService } from '../shared/services/config.service';
 import { Company } from './company';
-import { COMPANIES } from './mock-companies';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompaniesService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private config: ConfigService
+  ) { }
 
   getCompanies(): Observable<Company[]> {
-    return of(COMPANIES);
+    const url = `${this.config.getApiV1Url()}/companies`;
+    return this.http.get<Company[]>(url);
   }
 
-  getCompany(id: number) {
-    return this.getCompanies().pipe(
-      // (+) before `id` turns the string into a number
-      map((companies: Company[]) => companies.find(company => company.id === +id)!)
+  getCompany(id: number): Observable<Company> {
+    const url = `${this.config.getApiV1Url()}/companies/${id}`;
+    return this.http.get<Company>(url).pipe(
+      map((data: any) => data.company),
+      catchError(error => {
+          console.error(error.error.errors);
+          return throwError(error.error.message);  
+      })
     );
   }
 }

@@ -1,64 +1,41 @@
-import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { Observable, BehaviorSubject, catchError, of, finalize } from 'rxjs';
 import { Company } from '../company';
-import { COMPANIES } from './../mock-companies';
+import { CompaniesService } from '../companies.service';
 
 export class CompaniesDataSource extends DataSource<Company> {
-  data = COMPANIES;
-  paginator: MatPaginator | undefined;
-  sort: MatSort | undefined;
+  private companiesSubject = new BehaviorSubject<Company[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private countSubject = new BehaviorSubject<number>(0);
 
-  constructor() {
+  public loading$ = this.loadingSubject.asObservable();
+  public count$ = this.countSubject.asObservable();
+
+  constructor(private companiesService: CompaniesService) {
     super();
   }
 
-  connect(): Observable<Company[]> {
-    if (this.paginator && this.sort) {
-      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
-        .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
-        }));
-    } else {
-      throw Error('Please set the paginator and sort on the data source before connecting.');
-    }
+  connect(collectionViewer: CollectionViewer): Observable<Company[]> {
+    return this.companiesSubject.asObservable();
   }
 
-  disconnect(): void {}
-
-  private getPagedData(data: Company[]): Company[] {
-    if (this.paginator) {
-      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      return data.splice(startIndex, this.paginator.pageSize);
-    } else {
-      return data;
-    }
+  disconnect(collectionViewer: CollectionViewer): void {
+    this.companiesSubject.complete();
+    this.loadingSubject.complete();
+    this.countSubject.complete();
   }
 
-  /**
-   * Sort the data (client-side). If you're using server-side sorting,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  private getSortedData(data: Company[]): Company[] {
-    if (!this.sort || !this.sort.active || this.sort.direction === '') {
-      return data;
-    }
+  loadCompanies() {
+    this.loadingSubject.next(true);
 
-    return data.sort((a, b) => {
-      const isAsc = this.sort?.direction === 'asc';
-      switch (this.sort?.active) {
-        case 'id': return compare(+a.id, +b.id, isAsc);
-        case 'description': return compare(a.description, b.description, isAsc);
-        case 'country': return compare(a.country, b.country, isAsc);
-        default: return 0;
-      }
+    this.companiesService.getCompanies()
+    .pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
+    )
+    .subscribe((res: any) => {
+      this.countSubject.next(res.meta.total);
+      this.companiesSubject.next(res.data);
     });
   }
-}
-
-/** Simple sort comparator for example ID/Name columns (for client-side sorting). */
-function compare(a: string | number, b: string | number, isAsc: boolean): number {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
